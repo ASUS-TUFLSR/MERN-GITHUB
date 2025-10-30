@@ -1,24 +1,24 @@
 import React from 'react'
-import {Route ,Router} from "react-router-dom"
+import {Route ,Routes} from "react-router-dom"
 import HomePage from "./pages/HomePage"
 import LoginPage from "./pages/LoginPage"
 import SignUpPage from "./pages/SignUpPage"
 import ExplorePage from "./pages/ExplorePage"
 import LikesPage from "./pages/LikesPage"
-
+import Sidebar from './components/Sidebar'
 
 const App = () => {
   return (
-    <div className='flex'>
+    <div className='flex text-white'>
       <Sidebar/>
-      <div>
-        <Router>
-            <Route path={"/"} Component={<HomePage/>} />
-            <Route path={"/login"} Component={<LoginPage/>} />
-            <Route path={"/signup"} Component={<SignUpPage/>} />
-            <Route path={"/explore"} Component={<ExplorePage/>} />
-            <Route path={"/likes"} Component={<LikesPage/>} />
-        </Router>
+      <div className='max-w-5xl my-5 mx-auto text-white transition-all duration-300 flex-1' >
+        <Routes>
+            <Route path={"/"} element={<HomePage/>} />
+            <Route path={"/login"} element={<LoginPage/>} />
+            <Route path={"/signup"} element={<SignUpPage/>} />
+            <Route path={"/explore"} element={<ExplorePage/>} />
+            <Route path={"/likes"} element={<LikesPage/>} />
+        </Routes>
       </div>
     </div>
   )
