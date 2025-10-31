@@ -1,10 +1,11 @@
 import React from 'react'
 import { Link } from 'react-router-dom'
-import { IoHomeSharp } from "react-icons/io5";
+import { IoHomeSharp, IoLogOut } from "react-icons/io5";
 import { FaHeart } from "react-icons/fa";
 import { MdOutlineExplore } from "react-icons/md";
 import { PiSignInBold } from "react-icons/pi";
 import { MdEditDocument } from "react-icons/md";
+import Logout from './Logout';
 
 const Sidebar = () => {
   const authUser = true;
@@ -56,6 +57,13 @@ const Sidebar = () => {
 						<MdEditDocument size={25} />
 					</Link>
 				)}
+
+        {authUser && (
+          <div className='flex flex-col gap-2 mt-auto text-3xl' >
+            <Logout/>
+          </div>
+        )}
+
       </nav>
     </aside>
   )
