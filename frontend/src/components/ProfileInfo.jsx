@@ -11,7 +11,7 @@ const ProfileInfo = () => {
 		email: "johndoe@gmail.com",
 		followers: 100,
 		following: 200,
-		html_url: "https://github.com/burakorkmez",
+		html_url: "https://github.com/ASUS-TUFLSR",
 		location: "Somewhere, Earth",
 		name: "John Doe",
 		public_gists: 100,
