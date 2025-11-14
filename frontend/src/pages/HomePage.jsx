@@ -13,7 +13,7 @@ const HomePage = () => {
   const [repos, setRepos] = useState([]);
   const [loading, setLoading] = useState(false);
 
-  const [sortType, setSortType] = useState("forks")
+  // const [sortType, setSortType] = useState("forks")
  
 
   const getUserProfileAndRepos = useCallback( async () => {
@@ -45,9 +45,10 @@ const HomePage = () => {
       <Search/>
       <SortRepos/>
       <div className='flex gap-4 flex-col lg:flex-row justify-center items-center' >
-        <ProfileInfo/> 
-        <Repos/>
-        <Spinner />
+        {userProfile && !loading && <ProfileInfo userProfile={userProfile} /> }
+        {repos.length > 0 && !loading && <Repos repos={repos} />}
+        {loading && <Spinner />}
+        
       </div>
     </div>
   )
