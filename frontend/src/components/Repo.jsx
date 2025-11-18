@@ -13,7 +13,7 @@ const Repo = ({repo}) => {
 			await navigator.clipboard.writeText(repo.clone_url);
 		  toast.success("Repo Cloned Successfully");
 		  } catch (error) {
-			toast.error("Clipboard write failed. Please try again ")
+			toast.error("Clipboard write failed. Please try again ", error)
 		  }
 	}
 
