@@ -56,7 +56,7 @@ const HomePage = () => {
       <SortRepos/>
       <div className='flex gap-4 flex-col lg:flex-row justify-center items-start' >
         {userProfile && !loading && <ProfileInfo userProfile={userProfile} /> }
-        {repos.length > 0 && !loading && <Repos repos={repos} />}
+        {!loading && <Repos repos={repos} />}
         {loading && <Spinner />}
         
       </div>
