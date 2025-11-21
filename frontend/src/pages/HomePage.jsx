@@ -19,6 +19,8 @@ const HomePage = () => {
   const getUserProfileAndRepos = useCallback( async (username="ASUS-TUFLSR") => {
     setLoading(true);  
     try {
+       // Github only allows 60 request per hour, but we can get 5000 request per hour for authenticated requests
+        // https://docs.github.com/en/rest/using-the-rest-api/rate-limits-for-the-rest-api?apiVersion=2025-11-21 
         const userRes = await fetch(`https://api.github.com/users/${username}`);
         const userProfile = await userRes.json();
         setUserProfile(userProfile);
