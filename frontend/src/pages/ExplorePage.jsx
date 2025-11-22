@@ -12,10 +12,14 @@ const ExplorePage = () => {
 		setLoading(true);
 		setRepos([]);
 		try {
-			const res = await fetch(
-				`https://api.github.com/search/repositories?q=language:${language}&sort=stars&order=desc&per_page=10`
-			);
-
+			 const res = await fetch(
+				`https://api.github.com/search/repositories?q=language:${language}&sort=stars&order=desc&per_page=10`,
+			  {  
+			    headers: {
+			        Authorization: `token ${import.meta.env.VITE_GITHUB_API_KEY}`
+			    },
+              });
+	
 			const data = await res.json();
 			setRepos(data.items || []); // 🔥 safe — always array
 

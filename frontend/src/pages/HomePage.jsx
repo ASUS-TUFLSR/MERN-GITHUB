@@ -13,20 +13,23 @@ const HomePage = () => {
   const [repos, setRepos] = useState([]);
   const [loading, setLoading] = useState(false);
 
-   const [sortType, setSortType] = useState("forks")
+   const [sortType, setSortType] = useState("recent")
  
 
   const getUserProfileAndRepos = useCallback( async (username="ASUS-TUFLSR") => {
     setLoading(true);  
     try {
-       // Github only allows 60 request per hour, but we can get 5000 request per hour for authenticated requests
-        // https://docs.github.com/en/rest/using-the-rest-api/rate-limits-for-the-rest-api?apiVersion=2025-11-21 
-        const userRes = await fetch(`https://api.github.com/users/${username}`);
+        const userRes = await fetch(`https://api.github.com/users/${username}`,{
+           headers: {
+            Authorization: `token ${import.meta.env.VITE_GITHUB_API_KEY}`
+           },
+        });
         const userProfile = await userRes.json();
         setUserProfile(userProfile);
 
         const reposRes = await fetch(userProfile.repos_url);
         const repos = await reposRes.json();
+        repos.sort((a,b) => new Date(b.created_at) - new Date(a.created_at));
         setRepos(repos);
         return {userProfile, repos}     
       } catch (error) {
@@ -45,11 +48,13 @@ const HomePage = () => {
     setLoading(true);
     setRepos([]);
     setUserProfile(null);
+
     const {userProfile, repos} =  await getUserProfileAndRepos(username);
 
     setUserProfile(userProfile);
     setRepos(repos);
     setLoading(false);
+    setSortType("recent")
   }
 
   const onSort = (sortType) => {
