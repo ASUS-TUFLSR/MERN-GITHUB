@@ -15,12 +15,11 @@ const ExplorePage = () => {
 			const res = await fetch(
 				`https://api.github.com/search/repositories?q=language:${language}&sort=stars&order=desc&per_page=10`
 			);
-      
-			const { items } = await res.json(); // ✅ Correct key
-			setRepos(items);
+
+			const data = await res.json();
+			setRepos(data.items || []); // 🔥 safe — always array
 
 			setSelectedLanguage(language);
-      
 		} catch (error) {
 			toast.error(error.message);
 		} finally {
@@ -29,31 +28,46 @@ const ExplorePage = () => {
 	};
 
 	return (
-		<div className='px-4'>
-			<div className='bg-glass max-w-2xl mx-auto rounded-md p-4'>
-				<h1 className='text-xl font-bold text-center'>Explore Popular Repositories</h1>
+		<div className="px-4">
+			<div className="bg-glass max-w-2xl mx-auto rounded-md p-4">
+				<h1 className="text-xl font-bold text-center">Explore Popular Repositories</h1>
 
-				<div className='flex flex-wrap gap-2 my-2 justify-center'>
-					<img src='/javascript.svg' alt='JavaScript logo' className='h-11 sm:h-20 cursor-pointer'
+				<div className="flex flex-wrap gap-2 my-2 justify-center">
+					<img
+						src="/javascript.svg"
+						alt="JavaScript logo"
+						className="h-11 sm:h-20 cursor-pointer"
 						onClick={() => exploreRepos("javascript")}
 					/>
-					<img src='/typescript.svg' alt='TypeScript logo' className='h-11 sm:h-20 cursor-pointer'
+					<img
+						src="/typescript.svg"
+						alt="TypeScript logo"
+						className="h-11 sm:h-20 cursor-pointer"
 						onClick={() => exploreRepos("typescript")}
 					/>
-					<img src='/c++.svg' alt='C++ logo' className='h-11 sm:h-20 cursor-pointer'
+					<img
+						src="/c++.svg"
+						alt="C++ logo"
+						className="h-11 sm:h-20 cursor-pointer"
 						onClick={() => exploreRepos("c++")}
 					/>
-					<img src='/python.svg' alt='Python logo' className='h-11 sm:h-20 cursor-pointer'
+					<img
+						src="/python.svg"
+						alt="Python logo"
+						className="h-11 sm:h-20 cursor-pointer"
 						onClick={() => exploreRepos("python")}
 					/>
-					<img src='/java.svg' alt='Java logo' className='h-11 sm:h-20 cursor-pointer'
+					<img
+						src="/java.svg"
+						alt="Java logo"
+						className="h-11 sm:h-20 cursor-pointer"
 						onClick={() => exploreRepos("java")}
 					/>
 				</div>
 
 				{repos.length > 0 && (
-					<h2 className='text-lg font-semibold text-center my-4'>
-						<span className='bg-blue-100 text-blue-800 font-medium me-2 px-2.5 py-0.5 rounded-full'>
+					<h2 className="text-lg font-semibold text-center my-4">
+						<span className="bg-blue-100 text-blue-800 font-medium me-2 px-2.5 py-0.5 rounded-full">
 							{selectedLanguage.toUpperCase()}
 						</span>
 						Repositories
@@ -61,6 +75,17 @@ const ExplorePage = () => {
 				)}
 
 				{!loading && repos.length > 0 && <Repos repos={repos} alwaysFullWidth />}
+
+				{/* 🆕 Empty State message */}
+				{!loading && repos.length === 0 && selectedLanguage && (
+					<p className="text-center text-gray-400 py-6 text-lg">
+						No repositories found for{" "}
+						<span className="font-semibold text-white">
+							{selectedLanguage.toUpperCase()}
+						</span>
+					</p>
+				)}
+
 				{loading && <Spinner />}
 			</div>
 		</div>
