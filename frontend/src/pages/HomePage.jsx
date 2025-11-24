@@ -19,18 +19,12 @@ const HomePage = () => {
   const getUserProfileAndRepos = useCallback( async (username="ASUS-TUFLSR") => {
     setLoading(true);  
     try {
-        const userRes = await fetch(`https://api.github.com/users/${username}`,{
-           headers: {
-            Authorization: `token ${import.meta.env.VITE_GITHUB_API_KEY}`
-           },
-        });
-        const userProfile = await userRes.json();
+        const res = await fetch(`http://localhost:5000/api/users/profile/${username}`)
+        const {repos, userProfile} = await res.json()
         setUserProfile(userProfile);
-
-        const reposRes = await fetch(userProfile.repos_url);
-        const repos = await reposRes.json();
-        repos.sort((a,b) => new Date(b.created_at) - new Date(a.created_at));
         setRepos(repos);
+        repos.sort((a,b) => new Date(b.created_at) - new Date(a.created_at));
+        
         return {userProfile, repos}     
       } catch (error) {
         toast.error(error.message)

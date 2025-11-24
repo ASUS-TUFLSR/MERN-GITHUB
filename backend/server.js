@@ -1,6 +1,6 @@
 import express from "express";
 import dotenv from 'dotenv';
-
+import cors from "cors"
 import userRoutes from "./routes/user.router.js"
 
 
@@ -8,7 +8,7 @@ dotenv.config();
 
 const app = express();
 const PORT = 5000;
-
+app.use(cors());
 
 app.get("/", (req, res) => {
     res.send("Server Is Live");
