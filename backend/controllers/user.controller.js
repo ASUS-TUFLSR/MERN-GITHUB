@@ -1,5 +1,3 @@
-import express from "express";
-
 export const getUserProfileAndRepos = async (req,res) => {
     const {username} = req.params;
        try {
