@@ -7,9 +7,12 @@ import ExplorePage from "./pages/ExplorePage"
 import LikesPage from "./pages/LikesPage"
 import Sidebar from './components/Sidebar'
 import {Toaster} from "react-hot-toast"
+import { useAuthContext } from './context/AuthContext'
 
 
 const App = () => {
+  const {authUser} = useAuthContext();
+  console.log("Authenticated User", authUser)
   return (
     <div className='flex text-white'>
       <Sidebar/>
