@@ -14,8 +14,7 @@ const ExplorePage = () => {
 		try {
 			 const res = await fetch(`/api/explore/repos/` + language)
 			const {repos} = await res.json();
-			console.log("explore",repos)
-			setRepos(repos || []); // 🔥 safe — always array
+			setRepos(repos || []);
 			setSelectedLanguage(language);
 		} catch (error) {
 			toast.error(error.message);
