@@ -19,11 +19,16 @@ const HomePage = () => {
   const getUserProfileAndRepos = useCallback( async (username="ASUS-TUFLSR") => {
     setLoading(true);  
     try {
-        const res = await fetch(`/api/users/profile/${username}`)
-        const {repos, userProfile} = await res.json()
+        const res = await fetch(`/api/users/profile/${username}`);
+        const data = await res.json();
+        if(!res.ok){
+          throw new Error(data.error || "Something went wrong");
+        }
+        const {repos, userProfile} = data;
         setUserProfile(userProfile);
-        setRepos(repos);
-        repos.sort((a,b) => new Date(b.created_at) - new Date(a.created_at));
+        setRepos([...repos].sort((a, b) =>
+          new Date(b.created_at) - new Date(a.created_at)
+        ));
         
         return {userProfile, repos}     
       } catch (error) {
@@ -53,7 +58,9 @@ const HomePage = () => {
 
   const onSort = (sortType) => {
 		if (sortType === "recent") {
-			repos.sort((a, b) => new Date(b.created_at) - new Date(a.created_at)); 
+			setRepos([...repos].sort((a, b) =>
+       new Date(b.created_at) - new Date(a.created_at)
+      ));
 		} else if (sortType === "stars") {
 			repos.sort((a, b) => b.stargazers_count - a.stargazers_count); 
 		} else if (sortType === "forks") {
